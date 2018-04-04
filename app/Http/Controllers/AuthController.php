@@ -7,6 +7,7 @@ use Validator;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\User;
+use App\Http\Resources\User as UserResource;
 
 class AuthController extends Controller
 {
@@ -43,7 +44,7 @@ class AuthController extends Controller
      */
     public function me()
     {
-        return response()->json(auth()->user());
+        return new UserResource(User::find(auth()->id()));
     }
 
     /**

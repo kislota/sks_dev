@@ -11,7 +11,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\User::class, 50)->create();
+
+        factory(App\User::class, 3)
+            ->create()
+            ->each(function ($u) {
+                $u->comments()->save(factory(App\Comment::class)->make(['text' => 'User comments']));
+            });
         DB::table('users')->insert([
             'name' => 'admin',
             'email' => 'admin@gmail.com',

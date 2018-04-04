@@ -2,7 +2,7 @@
 
 use App\User;
 use Illuminate\Http\Request;
-use App\Http\Resources\User as UserResource;
+use App\Http\Resources\UserCollection;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -27,7 +27,8 @@ Route::group([
     Route::post('me', 'AuthController@me');
     Route::post('register', 'AuthController@register');
     Route::get('users', function () {
-        return UserResource::collection(User::get());
+        $users = User::with('comments')->get();
+        return $users;
     });
 
 });
