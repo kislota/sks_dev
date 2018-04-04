@@ -26,9 +26,10 @@ Route::group([
     Route::post('refresh', 'AuthController@refresh');
     Route::post('me', 'AuthController@me');
     Route::post('register', 'AuthController@register');
-    Route::get('users', function () {
-        $users = User::with('comments')->get();
-        return $users;
-    });
+    Route::get('users', 'UserController@index');
+//    Route::get('users', function () {
+//        return User::with('comments')->get();
+//
+//    });
 
 });

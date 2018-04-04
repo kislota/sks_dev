@@ -12,7 +12,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
 
-        factory(App\User::class, 3)
+        factory(App\User::class, 10)
             ->create()
             ->each(function ($u) {
                 $u->comments()->save(factory(App\Comment::class)->make(['text' => 'User comments']));
