@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Comment;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class CommentCollection extends ResourceCollection
@@ -14,6 +15,17 @@ class CommentCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'user_id' => $this->user_id,
+            'text' => $this->text
+        ];
+    }
+
+    public function with($request)
+    {
+        return [
+            'status' => 'success_comments_collection',
+        ];
     }
 }

@@ -22,14 +22,24 @@ Route::group([
 ], function () {
 
     Route::post('login', 'AuthController@login');
+    Route::post('me', 'AuthController@me');
+
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');
-    Route::post('me', 'AuthController@me');
     Route::post('register', 'AuthController@register');
-    Route::get('users', 'UserController@index');
-//    Route::get('users', function () {
-//        return User::with('comments')->get();
-//
-//    });
 
+    Route::get('users', 'UserController@index');
+    Route::get('user/{user}', 'UserController@show');
+    Route::put('user', 'UserController@store');
+    Route::delete('user/{user}', 'UserController@destroy');
+
+
+    Route::get('comments', 'CommentController@index');
+    Route::get('comment/{comment}', 'CommentController@show');
+    Route::post('comment', 'CommentController@store');
+    Route::put('comment', 'CommentController@store');
+    Route::delete('comment/{comment}', 'CommentController@destroy');
 });
+
+
+

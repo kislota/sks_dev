@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Comment;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class User extends JsonResource
@@ -15,15 +16,18 @@ class User extends JsonResource
     public function toArray($request)
     {
         return [
-                'id' => $this->id,
-                'name' => $this->name,
-                'email' => $this->email,
+                'user' => [
+                        'id' => $this->id,
+                        'name' => $this->name,
+                        'email' => $this->email,
+                    ],
+                'comments' => $this->comments,
         ];
     }
     public function with($request)
     {
         return [
-            'status' => 'succes',
+            'status' => 'success_user',
         ];
     }
 }

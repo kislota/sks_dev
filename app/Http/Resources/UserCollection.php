@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Comment;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class UserCollection extends ResourceCollection
@@ -15,14 +16,18 @@ class UserCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-            'data' => $this->collection->all(),
+            'users' => [
+                'id' =>$this->user->id,
+                'name' =>$this->user->name,
+                'email' =>$this->user->email,
+                ]
         ];
     }
 
     public function with($request)
     {
         return [
-            'status' => 'success',
+            'status' => 'success_user_collection',
         ];
     }
 }

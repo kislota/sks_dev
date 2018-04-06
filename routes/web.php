@@ -12,6 +12,5 @@
 */
 
 Route::get('/', function () {
-    $users = App\User::get();
-    return \App\Http\Resources\User::collection($users);
+    return view('welcome');
 });

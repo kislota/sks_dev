@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Comment;
+use App\Http\Resources\Comments;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
@@ -14,28 +15,29 @@ class CommentController extends Controller
      */
     public function index()
     {
-        //
-    }
+        $comments = Comment::all();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return Comments::collection($comments);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request  $requestC
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        $comment = $request->isMethod('put') ? Comment::findOrFail($request->comment_id) : new Comment;
+
+
+        $comment->id = $request->input('comment_id');
+        $comment->user_id = $request->input('user_id');
+        $comment->text = $request->input('text');
+
+        if($comment->save()) {
+            return new Comments($comment);
+        }
     }
 
     /**
@@ -46,30 +48,7 @@ class CommentController extends Controller
      */
     public function show(Comment $comment)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Comment  $comment
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Comment $comment)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Comment  $comment
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Comment $comment)
-    {
-        //
+        return new Comments($comment);
     }
 
     /**
@@ -80,6 +59,9 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
-        //
+        if($comment->delete()){
+            return new Comments($comment);
+        }
+
     }
 }
