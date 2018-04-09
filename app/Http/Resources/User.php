@@ -22,6 +22,7 @@ class User extends JsonResource
                         'email' => $this->email,
                     ],
                 'comments' => $this->comments,
+                'info' => $this->userinfo,
         ];
     }
     public function with($request)

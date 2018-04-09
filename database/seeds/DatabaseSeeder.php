@@ -11,16 +11,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-
         factory(App\User::class, 10)
             ->create()
             ->each(function ($u) {
-                $u->comments()->save(factory(App\Comment::class)->make(['text' => 'User comments']));
+                $u->comments()->save(factory(App\Comment::class)->make());
+                $u->comments()->save(factory(App\Comment::class)->make());
+                $u->comments()->save(factory(App\Comment::class)->make());
+                $u->comments()->save(factory(App\Comment::class)->make());
+                $u->comments()->save(factory(App\Comment::class)->make());
+                $u->userinfo()->save(factory(App\Userinfo::class)->make());
             });
+
         DB::table('users')->insert([
             'name' => 'admin',
             'email' => 'admin@gmail.com',
             'password' => bcrypt('secret'),
         ]);
+
     }
 }
