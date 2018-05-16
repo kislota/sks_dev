@@ -1,4 +1,4 @@
-###Laravel starer kit
+### Laravel sks crm
 
 ### Installation
 
