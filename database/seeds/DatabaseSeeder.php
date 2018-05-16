@@ -5,28 +5,12 @@ use Illuminate\Database\Seeder;
 class DatabaseSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Seed the application's database.
      *
      * @return void
      */
     public function run()
     {
-        factory(App\User::class, 10)
-            ->create()
-            ->each(function ($u) {
-                $u->comments()->save(factory(App\Comment::class)->make());
-                $u->comments()->save(factory(App\Comment::class)->make());
-                $u->comments()->save(factory(App\Comment::class)->make());
-                $u->comments()->save(factory(App\Comment::class)->make());
-                $u->comments()->save(factory(App\Comment::class)->make());
-                $u->userinfo()->save(factory(App\Userinfo::class)->make());
-            });
-
-        DB::table('users')->insert([
-            'name' => 'admin',
-            'email' => 'admin@gmail.com',
-            'password' => bcrypt('secret'),
-        ]);
-
+        // $this->call(UsersTableSeeder::class);
     }
 }

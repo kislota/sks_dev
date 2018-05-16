@@ -2,70 +2,57 @@
 
 namespace App\Http\Controllers;
 
-use App\Comment;
-use App\User;
-use App\Http\Resources\UserCollection;
-use App\Http\Resources\User as UserResources;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Mockery\Exception;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $users = User::all();
-
-        return UserResources::collection($users);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $user = User::findOrFail($request->user_id);
-
-        $user->id = $request->input('user_id');
-        $user->name = $request->input('name');
-        $user->email = $request->input('email');
-        $user->password = bcrypt($request->input('password'));
-
-        if($user->save()) {
-            return new UserResources($user);
-        }
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show(User $user)
-    {
-        return new UserResources($user);
-    }
+	function showLoggedUserData ()
+	{
+		return response()->json(['success' => true, 'data'=>JWTAuth::user()]);
+	}
 
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(User $user)
-    {
-        $comments = $user->comments()->delete();
+	function updateUserProfile ()
+	{
+		$data = request()->all();
 
-        if($user->delete()){
-            return new UserResources($user);
-        }
-    }
+		$user = JWTAuth::user();
+
+		try {
+			$user->update($data);
+			return response()->json(['success' => true, 'data'=>JWTAuth::user()]);
+		}
+		catch (Exception $e) {
+			return response()->json(['success' => false, 'message'=>$e->getMessage()], 501);
+		}
+	}
+
+
+	function updateUserProfilePicture(Request $request)
+	{
+		$user = JWTAuth::user();
+
+		$this->validate($request,[
+			'file'=> 'mimes:png,jpeg,jpg|max:1024'
+		]);
+
+		if(!$request->hasFile('profile-picture'))
+		{
+			return response()->json(['success' => false, 'message' => 'File not provided'], 404);
+		}
+
+		try {
+			$user->updateProfilePicture($request->file('profile-picture'));
+		}
+		catch (Exception $e) {
+			return response()->json(['success' => false, 'message' => 'File not provided'], 404);
+		}
+
+		return response()->json(['success' => true, 'data' => $user]);
+
+	}
+
 }

@@ -1,121 +1,92 @@
-<h1>Login</h1>
+###Laravel starer kit
 
-<h2>Method post</h2>
-<p><b>email:</b> email@mail.com</p>
-<p><b>password:</b> password</p>
-<p><b>URL: </b>http://localhost/api/auth/login</p>
-<p><b>Answer</b></p>
-<pre>{
-    "access_token": "JWT_TOKEN",
-    "token_type": "bearer",
-    "expires_in": 3600
-}</pre>
-<h2>Method post</h2>
-<p><b>Authorization:</b> Bearer JWT_TOKEN</p>
-<p><b>URL: </b>http://localhost/api/auth/me</p>
-<pre>{
-    "data": {
-        "user": {
-            "id": 1,
-            "name": "name",
-            "email": "email@mail.com"
-        },
-        "comments": [
-                        {
-                            "id": 1,
-                            "user_id": 1,
-                            "text": "User comments"
-                        },
-                    ]
-        },
-    "status": "success_user"
-}</pre>
-<h1>Register</h1>
-<h2>Method post</h2>
-<p><b>name:</b> username</p>
-<p><b>email:</b> email@mail.com</p>
-<p><b>password:</b> password</p>
-<p><b>URL: </b>http://localhost/api/auth/register</p>
-<pre>{
-    "access_token": "JWT_TOKEN",
-    "token_type": "bearer",
-    "expires_in": 3600
-}</pre>
-<h1>Logout</h1>
-<h2>Method post</h2>
-<p><b>Authorization:</b> Bearer JWT_TOKEN</p>
-<p><b>URL: </b>http://localhost/api/auth/logout</p>
-<pre>{
-    "message": "Successfully logged out"
-}</pre>
-<h2>Method get</h2>
-<p><b>Authorization:</b> Bearer JWT_TOKEN</p>
-<p><b>URL: </b>http://localhost/api/auth/users</p>
-<pre>{
-"data":
-    {
-    "user":
-        {
-        "id":1,
-        "name":"username",
-        "email":"email@mail.com"
-        },
-    "comments":[
-        {
-        "id":1,
-        "user_id":1,
-        "text":"User comments"
-        }
-        ]
-    },
-"status":"success_user"
-}</pre>
-<h2>Method get</h2>
-<p><b>Authorization:</b> Bearer JWT_TOKEN</p>
-<p><b>URL: </b>http://localhost/api/auth/users</p>
-<pre>[
-    {
-    "user":
-        {
-        "id":1,
-        "name":"username",
-        "email":"email@mail.com"
-        },
-    "comments":[
-        {
-        "id":1,
-        "user_id":1,
-        "text":"User comments"
-        },
-        {
-        "id":2,
-        "user_id":1,
-        "text":"User comments"
-        }
-        ]
-    },
-    {
-    "user":
-        {
-        "id":2,
-        "name":"username",
-        "email":"email@mail.com"
-        },
-    "comments":[
-        {
-        "id":3,
-        "user_id":2,
-        "text":"User comments"
-        },
-        {
-        "id":4,
-        "user_id":2,
-        "text":"User comments"
-        }
-        ]
-    },
-]
-</pre>
-<h2>Method put</h2>
-<p><b>Authorization:</b> Bearer JWT_TOKEN</p>
-<p><b>URL: </b>http://localhost/api/auth/user</p>
+### Installation
+
+```
+composer install
+npm install
+bower install
+```
+
+Create `.env` file (can be based on `.env.example`)
+```
+php artisan key:generate
+
+php artisan vendor:publish --provider="Tymon\JWTAuth\Providers\LaravelServiceProvider"
+
+php artisan jwt:generate
+```
+
+Create .env file using .env.example as the base.
+
+Set DB credentials within .env file
+
+Run migrations
+
+```
+php artisan migrate
+```
+
+Run seeder
+```
+php artisan db:seed
+```
+
+Create storage link
+
+```
+php artisan storage:link
+```
+
+
+### Dev Build
+to compile the project once, run:
+```
+npm run dev
+```
+
+to run porject watcher, run:
+```
+npm run watch-poll
+```
+
+### Production Build
+
+go to project url in browser or run the command:
+
+```
+ng build
+```
+
+### Structure
+
+Angular5 files are stored in  **/resources/assets/src folder**
+
+
+###E-Mailing
+
+Currently emailing is used for:
+- reset password
+
+for dev purpose please set-up appropriate smtp.mailtrap.io settings in .env file
+
+###.env file
+
+the following additional fields are obligate to be filled out within .env file:
+- APP_URL
+- MAIL_DRIVER
+- MAIL_HOST
+- MAIL_PORT
+- MAIL_USERNAME
+- MAIL_PASSWORD
+- MAIL_ENCRYPTION
+
+
+###Login to the app
+
+To login to the app use the following creds:
+
+```
+admin@gmail.com
+admin
+```

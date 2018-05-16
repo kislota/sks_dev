@@ -1,8 +1,7 @@
 <?php
 
-use App\User;
 use Illuminate\Http\Request;
-use App\Http\Resources\UserCollection;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,32 +13,23 @@ use App\Http\Resources\UserCollection;
 |
 */
 
-Route::group([
-
-    'middleware' => 'api',
-    'prefix' => 'auth'
-
-], function () {
-
-    Route::post('login', 'AuthController@login');
-    Route::post('me', 'AuthController@me');
-
-    Route::post('logout', 'AuthController@logout');
-    Route::post('refresh', 'AuthController@refresh');
-    Route::post('register', 'AuthController@register');
-
-    Route::get('users', 'UserController@index');
-    Route::get('user/{user}', 'UserController@show');
-    Route::put('user', 'UserController@store');
-    Route::delete('user/{user}', 'UserController@destroy');
-
-
-    Route::get('comments', 'CommentController@index');
-    Route::get('comment/{comment}', 'CommentController@show');
-    Route::post('comment', 'CommentController@store');
-    Route::put('comment', 'CommentController@store');
-    Route::delete('comment/{comment}', 'CommentController@destroy');
+Route::get('/test', function (){
+	return response()->json(['test-data'=>'all is ok!']);
 });
 
+Route::post('login', 'AuthController@login');
+Route::post('register', 'AuthController@register');
+Route::post('recover', 'AuthController@recover');
+
+Route::post('password/reset/{token}', 'Auth\ResetPasswordController@postReset')->name('password.resetPost');
 
 
+Route::group(['middleware'=>['jwt.auth']],function () {
+
+	Route::get( '/auth-test', function () {
+		return response()->json( [ 'test-data' => 'all is ok!' ] );
+	} );
+
+	Route::get('/logged-user', 'UserController@showLoggedUserData')->name('user.showLoggedUserData');
+
+});
