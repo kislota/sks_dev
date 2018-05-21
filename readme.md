@@ -14,7 +14,7 @@ php artisan key:generate
 
 php artisan vendor:publish --provider="Tymon\JWTAuth\Providers\LaravelServiceProvider"
 
-php artisan jwt:generate
+php artisan jwt:secret
 ```
 
 Create .env file using .env.example as the base.
@@ -63,14 +63,14 @@ ng build
 Angular5 files are stored in  **/resources/assets/src folder**
 
 
-###E-Mailing
+### E-Mailing
 
 Currently emailing is used for:
 - reset password
 
 for dev purpose please set-up appropriate smtp.mailtrap.io settings in .env file
 
-###.env file
+### .env file
 
 the following additional fields are obligate to be filled out within .env file:
 - APP_URL
@@ -82,7 +82,7 @@ the following additional fields are obligate to be filled out within .env file:
 - MAIL_ENCRYPTION
 
 
-###Login to the app
+### Login to the app
 
 To login to the app use the following creds:
 
